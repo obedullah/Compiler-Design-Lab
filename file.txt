@@ -1,0 +1,6 @@
+0	//initial state
+1,2	//final state
+0 1 2 	//input symbols
+0 1 -   //states onwards
+0 1 2
+2 2 -
