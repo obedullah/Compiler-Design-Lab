@@ -1,3 +1,4 @@
-2	//initial state
-1 0 0 1	//states with output
-1 1 0 0
+0	//initial state
+5 - 0 - 1 -	//input then - as output column
+1 6 - - - -	//states with input followed by output
+- - 1 1 0 0
