@@ -4,7 +4,7 @@
 int main()
 {
 	char ch,str[100];
-	int init,m,state,len,i,j,final[10],matrix[10][10],temp,column;
+	int init,m,state,len,i,j,final[10],matrix[10][10],temp,column,flag,t;
 	FILE *fp;
 	fp=fopen("file_automata.txt","r");
 	if(fp==NULL)
@@ -54,6 +54,25 @@ int main()
 	printf("enter the string : ");
 	fgets(str,100,stdin);
 	len=strlen(str)-1;
+	
+	//this is only for validation that except input symbols if any present then not accepted
+	for(i=0;i<len;i++)
+	{
+		flag=0;
+		for(t=0;t<j;t++)
+		{
+			if(str[i]-48 == matrix[0][t])
+			{
+				flag=1;
+			}
+		}
+		if(flag==0)
+		{
+			printf("input string is not acceptable\n");
+			exit(1);
+		}
+	}
+	
 	state=init+1;
 	for(i=0;i<len;i++)
 	{
