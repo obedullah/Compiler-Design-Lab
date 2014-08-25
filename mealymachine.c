@@ -5,7 +5,7 @@ int main()
 {
 	FILE *fp;
 	char ch,str[100];
-	int matrix[10][10],i=0,j=0,temp,init,m,n,len,st,output[100][100],state[100][100],result[100];
+	int matrix[10][10],i=0,j=0,temp,init,m,n,len,st,result[100],column;
 	fp=fopen("filemealy.txt","r");
 	if(fp==NULL)
 	{
@@ -38,43 +38,30 @@ int main()
 	}
 	j=temp;
 	fclose(fp);
-	//separating states
-	for(m=0;m<i;m++)
-	{
-		temp=0;
-		for(n=0;n<j/2;n++)
-		{
-			state[m][n]=matrix[m][temp];
-			temp+=2;
-		}
-	}
-	//separating outputs
-	for(m=0;m<i;m++)
-	{
-		temp=0;
-		for(n=0;n<j/2;n++)
-		{
-			temp++;
-			output[m][n]=matrix[m][temp];
-			temp++;
-		}
-	}
 
 	printf("enter the input string : ");
 	fgets(str,100,stdin);
 	len=strlen(str)-1;
 	//logic for mealy machine
 	m=0;
-	st=init-1;
+	st=init+1;
 	for(i=0;i<len;i++)
 	{
-		temp=state[st][str[i]-48];
+		column=0;
+		for(column=0;column<j;column+=2)
+		{
+			if(matrix[0][column]==(str[i]-48))
+			{
+				break;
+			}
+		}
+		temp=matrix[st][column]+1;
 		if(st==-1)
 		{
 			printf("input string is not acceptable\n");
 			exit(1);
 		}
-		result[m++]=output[st][str[i]-48];
+		result[m++]=matrix[st][column+1];
 		st=temp;
 	}
 	//printing final results
