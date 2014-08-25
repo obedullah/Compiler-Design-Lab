@@ -4,19 +4,18 @@
 int main()
 {
 	char ch,str[100];
-	int init,m,state,len,i,j,final[10],matrix[10][10],temp;
+	int init,m,state,len,i,j,final[10],matrix[10][10],temp,column;
 	FILE *fp;
-	fp=fopen("file.txt","r");
+	fp=fopen("file_automata.txt","r");
 	if(fp==NULL)
 	{
 		printf("file error\n");
 		exit(1);
 	}
 	
+	fscanf(fp,"%d",&init);
 	fscanf(fp,"%c",&ch);
-	init=ch-48;
-	fscanf(fp,"%c",&ch);
-	
+	//reading from file for final states
 	m=0;
 	while(1)
 	{
@@ -30,7 +29,7 @@ int main()
 			final[m++]=ch-48;
 		}
 	}
-	
+	//reading from file state matrix along with input symbols
 	i=0;
 	j=0;
 	while((fscanf(fp,"%c",&ch))!=EOF)
@@ -54,25 +53,23 @@ int main()
 		}
 	}
 	fclose(fp);
+	j=temp;
 	
 	printf("enter the string : ");
 	fgets(str,100,stdin);
 	len=strlen(str)-1;
-	
-	//checking if string has not other symbols except input symbol to validate
+	//logic for finite automata
+	state=init+1;
 	for(i=0;i<len;i++)
 	{
-		if(str[i]-48 >= temp)
+		for(column=0;column<j;column++)
 		{
-			printf("string not accepted\n");
-			exit(1);
+			if(matrix[0][column]==(str[i]-48))
+			{
+				break;
+			}
 		}
-	}
-	
-	state=1;
-	for(i=0;i<len;i++)
-	{
-		state=matrix[state][str[i]-48];
+		state=matrix[state][column]+1;
 		if(state==-1)
 		{
 			printf("string not accepted\n");
@@ -82,14 +79,13 @@ int main()
 		{	
 			for(j=0;j<m;j++)
 			{	
-				if(final[j]==state)
+				if(final[j]==state-1)
 				{
 					printf("string accepted\n");
 					exit(1);
 				}
 			}
 		}
-		state+=1;
 	}
 	printf("string not accepted\n");
 	return 0;
