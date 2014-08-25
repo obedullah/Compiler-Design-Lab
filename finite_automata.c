@@ -65,11 +65,12 @@ int main()
 			}
 		}
 		state=matrix[state][column]+1;
-		if(state==-1)
+		if((state-1)==-1)
 		{
 			printf("\nstring not accepted\n\n");
 			exit(1);
 		}
+		
 		if(i==len-1)
 		{	
 			for(j=0;j<m;j++)
