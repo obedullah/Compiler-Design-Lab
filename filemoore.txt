@@ -1,4 +1,4 @@
-0	//initial state
-5 1 0 -	//input symbols and - as output column
-- 1 1 1	//states as output
+0
+5 1 0 -
+- 1 1 1
 1 0 - 2

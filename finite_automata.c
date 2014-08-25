@@ -12,10 +12,8 @@ int main()
 		printf("file error\n");
 		exit(1);
 	}
-	
 	fscanf(fp,"%d",&init);
 	fscanf(fp,"%c",&ch);
-	//reading from file for final states
 	m=0;
 	while(1)
 	{
@@ -29,7 +27,6 @@ int main()
 			final[m++]=ch-48;
 		}
 	}
-	//reading from file state matrix along with input symbols
 	i=0;
 	j=0;
 	while((fscanf(fp,"%c",&ch))!=EOF)
@@ -54,11 +51,9 @@ int main()
 	}
 	fclose(fp);
 	j=temp;
-	
 	printf("enter the string : ");
 	fgets(str,100,stdin);
 	len=strlen(str)-1;
-	//logic for finite automata
 	state=init+1;
 	for(i=0;i<len;i++)
 	{
@@ -72,7 +67,7 @@ int main()
 		state=matrix[state][column]+1;
 		if(state==-1)
 		{
-			printf("string not accepted\n");
+			printf("\nstring not accepted\n\n");
 			exit(1);
 		}
 		if(i==len-1)
@@ -81,12 +76,12 @@ int main()
 			{	
 				if(final[j]==state-1)
 				{
-					printf("string accepted\n");
+					printf("\nstring accepted\n\n");
 					exit(1);
 				}
 			}
 		}
 	}
-	printf("string not accepted\n");
+	printf("\nstring not accepted\n\n");
 	return 0;
 }
