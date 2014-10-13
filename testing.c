@@ -7,7 +7,7 @@ int m=0,input=0,g;
 
 char first_find(char ch){
 	int t,count,r;
-	if(ch >= 97 || ch <= 122){
+	if(ch >= 97 && ch <= 122){
 		return ch;
 	}
 	t=0;
@@ -23,10 +23,9 @@ char first_find(char ch){
 	}
 }
 
-int find(char a, char b){
-	if(b>=65 && b<=122){
-		
-		if(a==first_find(b)){
+int find(char ch1, char ch2){
+	if(ch2>=65 && ch2<=91){
+		if(ch1==first_find(ch2)){
 			return 1;
 		}
 		else{
@@ -34,7 +33,7 @@ int find(char a, char b){
 		}
 	}
 	else{
-		if(a==b){
+		if(ch1==ch2){
 			return 1;
 		}
 		else{
@@ -83,7 +82,7 @@ int main(){
 	int i,j,row,col,len,temp,t,r,count,flag=0;
 	FILE *fp;
 	//opening and reading file into 2-D matrix as a table
-	fp=fopen("file","r");
+	fp=fopen("test_file","r");
 	if(fp==NULL){
 		printf("file read error\n");
 		exit(1);
@@ -133,13 +132,14 @@ int main(){
 	}
 	for(r=t;r<count;r++){
 		if(find(str[0],table[r][1])){
+			printf("table[%d][1] : %c\n",r,table[r][1]);
 			flag=1;
 			break;
 		}
 	}
 	//if starting symbol is different means not acceptable
 	if(flag==0){
-		printf("string is not accepted\n");
+		printf("string is not accepted starting\n");
 		exit(1);
 	}
 	
@@ -156,15 +156,19 @@ int main(){
 	//g integer is used to hold currently grammar symbol is executed
 	for(g=0;g<m;g++){
 	
-		//here we find if current grammar symbol is variable or terminal in else if block below
+		//here we find if current grammar symbol is variable or 
+		//terminal in else if block below
+		printf("current : %s\n",current);
 		if((current[g] >= 65) && (current[g] <=91)){
 		
-			//func finds if input string is matched according to grammar or not if match then increase input index
+			//func finds if input string is matched according to grammar or not 
+			//if match then increase input index
 			if(func(current[g])==1){
 				input++;
 			}
 			
-			//here if func returns 2 means input symbol not matched but grammar symbol derives epsilon '$'
+			//here if func returns 2 means input symbol not matched but 
+			//grammar symbol derives epsilon '$'
 			//so input string index is not increased here
 			else if(func(current[g])!=2){
 				printf("string is not accepted case func\n");
@@ -172,7 +176,8 @@ int main(){
 			}
 		}
 		
-		//if current grammar symbol is not variable means it is terminal so we simply compare it with input string
+		//if current grammar symbol is not variable means it is terminal 
+		//so we simply compare it with input string
 		else if((current[i] >= 97) && (current[i] <=122)){
 			if(current[g]==str[input]){
 				input++;
@@ -184,7 +189,8 @@ int main(){
 		}
 	}
 	
-	//if length of input string and index input reaches to equal means string is accepted
+	//if length of input string and index input reaches to equal 
+	//means string is accepted
 	if(len==input){
 		printf("string is accepted\n");
 	}
