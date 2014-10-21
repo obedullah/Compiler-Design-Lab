@@ -1,0 +1,4 @@
+if x<100 goto 103
+if false x>100 goto 104
+if x!=y goto 104
+x=0
