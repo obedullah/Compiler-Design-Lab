@@ -2,21 +2,15 @@
 #include<stdlib.h>
 #include<string.h>
 
-int array[20],line=100,n=0;
+int array[20],n=0;
 
 void addleader(int num){
-    int i;
-    for(i=0;i<n;i++){
-        if(array[i]==num){
-            return;
-        }
-    }
     array[n++]=num;
 }
 
 int main(){
-    chat str[10];
-    int i,len,num;
+    char str[50];
+    int i,len,num,k,line=100,new[20],m,j,temp;
     FILE *fp;
     fp=fopen("file_tac","r");
     if(fp==NULL){
@@ -24,24 +18,55 @@ int main(){
         exit(1);
     }
     addleader(line);
-    line++;
-    while(feof(fp)){
-        fscanf(fp,"%s",str);
-        if(strcmp(str,"goto")==0){
-            addleader(line);
-            fscanf(fp,"%s",str);
-            num=0;
-            len=strlen(str);
-            for(i=0;i<len;i++){
-                num+=(num*10)+str[i]-48;
+    while(!feof(fp)){
+        fscanf(fp," %[^\n]",str);
+        len=strlen(str);
+        for(i=0;i<len;i++){
+            if(str[i]=='g'){
+                if(str[i+1]=='o'){
+                    if(str[i+2]=='t'){
+                        if(str[i+3]=='o'){
+                            i+=5;
+                            num=0;
+                            for(k=i;k<len;k++){
+                                num*=10;
+                                num+=str[k]-48;
+                            }
+                            addleader(num);
+                            addleader(line+1);
+                        }
+                    }
+                }
             }
-            addleader(num);
-            line++;
+        }
+        line++;
+    }
+    //to remove duplicate leaders sort it
+    for(i=0;i<n;i++){
+        for(j=i+1;j<n;j++){
+            if(array[i] > array[j]){
+                temp=array[i];
+                array[i]=array[j];
+                array[j]=temp;
+            }
         }
     }
-    printf("leaders are :\n");
+    printf("sorted leaders are :\n");
     for(i=0;i<n;i++){
         printf("%d\t",array[i]);
+    }
+    //putting unique elements into new array
+    m=0;
+    for(i=0;i<n;i++){
+        temp=array[i];
+        while(temp==array[i+1]){
+            i++;
+        }
+        new[m++]=temp;
+    }
+    printf("\nlearders are :\n");
+    for(i=0;i<m;i++){
+        printf("%d\t",new[i]);
     }
     printf("\n");
     return 0;
