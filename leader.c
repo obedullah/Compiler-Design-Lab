@@ -41,7 +41,7 @@ int main(){
         }
         line++;
     }
-    //to remove duplicate leaders sort it
+    //to remove duplicate leaders first sort it and ...
     for(i=0;i<n;i++){
         for(j=i+1;j<n;j++){
             if(array[i] > array[j]){
@@ -51,20 +51,21 @@ int main(){
             }
         }
     }
-    printf("sorted leaders are :\n");
-    for(i=0;i<n;i++){
-        printf("%d\t",array[i]);
-    }
     //putting unique elements into new array
     m=0;
-    for(i=0;i<n;i++){
-        temp=array[i];
-        while(temp==array[i+1]){
-            i++;
+    for(i=0;i<n-1;i++){
+    	temp=array[i];
+    	j=i+1;
+        while(temp==array[j] && j<n-1){
+            j++;
         }
         new[m++]=temp;
+        i=j-1;
+    }	
+    if(array[n-1]!=array[n-2]){
+    	new[m++]=array[n-1];
     }
-    printf("\nlearders are :\n");
+    printf("\nleaders are :\n");
     for(i=0;i<m;i++){
         printf("%d\t",new[i]);
     }
